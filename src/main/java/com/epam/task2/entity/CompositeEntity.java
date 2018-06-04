@@ -56,6 +56,7 @@ public class CompositeEntity extends TextEntity implements CompositeExtend {
 
     @Override
     public String getContent(){
+        if(content!=null) return content;
         String content="";
         for (TextEntity textEntity : childList) {
             if(textEntity.isLeaf()) {
@@ -65,7 +66,7 @@ public class CompositeEntity extends TextEntity implements CompositeExtend {
                 CompositeEntity entity = (CompositeEntity)textEntity;
                 content+=entity.getContent();
             }
-        }
+        } this.content=content;
     return content;
     }
 }

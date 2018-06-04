@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * This class is parses paragraphs into sentences
+ */
 public class SentenceParser extends BaseParser {
     private static final String REGEX_SENTENCE = "regex.sentence";
 

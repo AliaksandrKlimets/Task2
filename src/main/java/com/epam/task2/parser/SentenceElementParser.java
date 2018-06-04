@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * This class parses sentences into words and punctuation marks
+ */
 public class SentenceElementParser extends BaseParser {
     private static final String REGEX_WORD = "regex.word";
     private static final String REGEX_PUNCT = "regex.punctuation";
@@ -26,9 +30,14 @@ public class SentenceElementParser extends BaseParser {
             matcher = Pattern.compile(ManagerBundle.getProperty(REGEX_PUNCT)).matcher(sentenceElem);
             if(matcher.find())
             sentenceEntity.addChild(new LeafEntity(TextEntityType.PUNCTUATION_MARK,sentenceElem));
-            else sentenceEntity.addChild(new LeafEntity(TextEntityType.WORD,sentenceElem));
+            else {
+                String str=sentenceElem;
+                if ((Pattern.compile("[\\s]+").matcher(sentenceElem).find())) {
+                    str = " ";
+                }
+                sentenceEntity.addChild(new LeafEntity(TextEntityType.WORD,str));
+            }
         }
-
         return sentenceEntity;
     }
 

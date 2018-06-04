@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * This class parses test inti paragraphs
+ */
 public class ParagraphParser extends BaseParser {
     private static final String REGEX_PARAGRAPH = "regex.paragraph";
     private static final String REGEX_CODE = "regex.code_list";
@@ -18,7 +22,7 @@ public class ParagraphParser extends BaseParser {
 
     @Override
     public TextEntity parse(String content) {
-        CompositeEntity paragraph = new CompositeEntity(TextEntityType.PARAGRAPH);
+        CompositeEntity paragraph = new CompositeEntity(TextEntityType.TEXT);
         List<String> paragraphItems = new ArrayList<>();
         Matcher matcher = Pattern.compile(ManagerBundle.getProperty(REGEX_PARAGRAPH)).matcher(content);
         while (matcher.find()){

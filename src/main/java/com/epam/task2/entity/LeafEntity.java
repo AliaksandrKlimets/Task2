@@ -1,5 +1,8 @@
 package com.epam.task2.entity;
 
+/**
+ * Leaf is a class that can't has children :(
+ */
 public class LeafEntity extends TextEntity {
     private TextEntityType type;
 
