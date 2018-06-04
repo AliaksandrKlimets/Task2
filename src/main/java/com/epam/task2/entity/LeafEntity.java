@@ -3,6 +3,7 @@ package com.epam.task2.entity;
 public class LeafEntity extends TextEntity {
     private TextEntityType type;
 
+
     public LeafEntity(TextEntityType type, String content) {
         this.type = type;
         this.content = content;

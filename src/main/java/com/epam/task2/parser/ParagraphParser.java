@@ -18,7 +18,6 @@ public class ParagraphParser extends BaseParser {
 
     @Override
     public TextEntity parse(String content) {
-        System.out.println("Я ТУТ");
         CompositeEntity paragraph = new CompositeEntity(TextEntityType.PARAGRAPH);
         List<String> paragraphItems = new ArrayList<>();
         Matcher matcher = Pattern.compile(ManagerBundle.getProperty(REGEX_PARAGRAPH)).matcher(content);

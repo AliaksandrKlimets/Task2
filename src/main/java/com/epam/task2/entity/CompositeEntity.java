@@ -58,7 +58,13 @@ public class CompositeEntity extends TextEntity implements CompositeExtend {
     public String getContent(){
         String content="";
         for (TextEntity textEntity : childList) {
-            content+=textEntity.getContent();
+            if(textEntity.isLeaf()) {
+                LeafEntity leaf= (LeafEntity)textEntity;
+                content += leaf.getContent();
+            }else{
+                CompositeEntity entity = (CompositeEntity)textEntity;
+                content+=entity.getContent();
+            }
         }
     return content;
     }

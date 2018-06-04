@@ -25,12 +25,8 @@ public class SentenceElementParser extends BaseParser {
         for(String sentenceElem: sentenceElement){
             matcher = Pattern.compile(ManagerBundle.getProperty(REGEX_PUNCT)).matcher(sentenceElem);
             if(matcher.find())
-            sentenceEntity.addChild(new LeafEntity(TextEntityType.WORD,sentenceElem));
-            else sentenceEntity.addChild(new LeafEntity(TextEntityType.PUNCTUATION_MARK,sentenceElem));
-        }
-
-        for (TextEntity leafEntity : sentenceEntity.getChilds()) {
-            System.out.print(leafEntity.getContent());
+            sentenceEntity.addChild(new LeafEntity(TextEntityType.PUNCTUATION_MARK,sentenceElem));
+            else sentenceEntity.addChild(new LeafEntity(TextEntityType.WORD,sentenceElem));
         }
 
         return sentenceEntity;
