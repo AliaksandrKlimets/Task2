@@ -2,7 +2,6 @@ package com.epam.task2.parser;
 
 import com.epam.task2.entity.CompositeEntity;
 import com.epam.task2.entity.TextEntity;
-import com.epam.task2.entity.TextEntityType;
 import com.epam.task2.manager.ManagerBundle;
 
 import java.util.ArrayList;
@@ -18,7 +17,8 @@ public class SentenceParser extends BaseParser {
 
     @Override
     public TextEntity parse(String content){
-        CompositeEntity sentence = new CompositeEntity(TextEntityType.PARAGRAPH);
+       // System.out.print(content);
+        CompositeEntity sentence = new CompositeEntity();
         ArrayList<String> sentences = new ArrayList<>();
         Matcher matcher = Pattern.compile(ManagerBundle.getProperty(REGEX_SENTENCE)).matcher(content);
 
@@ -27,6 +27,7 @@ public class SentenceParser extends BaseParser {
         }
 
         for (String sentenceItem : sentences) {
+            //System.out.println(sentenceItem);
             sentence.addChild(nextParser.parse(sentenceItem));
         }
         return sentence;

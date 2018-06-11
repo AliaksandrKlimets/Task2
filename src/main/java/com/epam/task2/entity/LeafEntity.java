@@ -4,20 +4,13 @@ package com.epam.task2.entity;
  * Leaf is a class that can't has children :(
  */
 public class LeafEntity extends TextEntity {
-    private TextEntityType type;
+    private String content;
 
-
-    public LeafEntity(TextEntityType type, String content) {
-        this.type = type;
+    public LeafEntity(String content) {
         this.content = content;
     }
 
     public LeafEntity() {
-    }
-
-    @Override
-    public TextEntityType getType() {
-        return this.type;
     }
 
     @Override
@@ -31,12 +24,9 @@ public class LeafEntity extends TextEntity {
     }
 
     @Override
-    public void setType(TextEntityType type){
-        this.type=type;
-    }
-
-    @Override
-    public String getContent(){
+    public String toString(){
         return content;
     }
+
+    public String getContent(){return content;}
 }

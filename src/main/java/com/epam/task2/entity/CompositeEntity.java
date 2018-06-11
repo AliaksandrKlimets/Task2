@@ -7,23 +7,10 @@ import java.util.List;
 
 public class CompositeEntity extends TextEntity implements CompositeExtend {
     private List<TextEntity> childList;
-    private TextEntityType type;
-
-    public CompositeEntity(TextEntityType type) {
-        childList = new ArrayList<>();
-       // this.content=content;
-        this.type = type;
-    }
 
     public CompositeEntity() {
+        childList = new ArrayList<>();
     }
-
-
-    @Override
-    public TextEntityType getType() {
-        return this.type;
-    }
-
     @Override
     public boolean isLeaf() {
         return false;
@@ -32,11 +19,6 @@ public class CompositeEntity extends TextEntity implements CompositeExtend {
     @Override
     public int size() {
         return childList.size();
-    }
-
-    @Override
-    public void setType(TextEntityType type) {
-        this.type = type;
     }
 
     @Override
@@ -50,23 +32,27 @@ public class CompositeEntity extends TextEntity implements CompositeExtend {
     }
 
     @Override
-    public List<TextEntity> getChilds() {
+    public List<TextEntity> getChildList() {
         return childList;
     }
 
     @Override
-    public String getContent(){
-        if(content!=null) return content;
+    public void setChildList(List<TextEntity> list){
+        childList = list;
+    }
+
+    @Override
+    public String toString(){
         String content="";
         for (TextEntity textEntity : childList) {
             if(textEntity.isLeaf()) {
                 LeafEntity leaf= (LeafEntity)textEntity;
-                content += leaf.getContent();
+                content += leaf.toString();
             }else{
                 CompositeEntity entity = (CompositeEntity)textEntity;
-                content+=entity.getContent();
+                content+=entity.toString();
             }
-        } this.content=content;
+        }
     return content;
     }
 }

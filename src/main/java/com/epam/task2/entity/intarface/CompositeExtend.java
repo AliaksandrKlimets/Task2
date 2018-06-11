@@ -6,5 +6,6 @@ import java.util.List;
 public interface CompositeExtend {
     void addChild(TextEntity textComponent);
     void removeChild(TextEntity textComponent);
-    List<TextEntity> getChilds();
+    List<TextEntity> getChildList();
+    void setChildList(List<TextEntity> list);
 }

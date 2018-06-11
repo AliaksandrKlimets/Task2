@@ -1,9 +1,10 @@
 package com.epam.task2.manager;
 
 import com.epam.task2.entity.CompositeEntity;
+import com.epam.task2.entity.LeafEntity;
 import com.epam.task2.entity.TextEntity;
-import com.epam.task2.entity.TextEntityType;
 import com.epam.task2.parser.ParserLogic;
+import com.epam.task2.parser.SentenceElementParser;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -20,20 +21,21 @@ public class TextTask {
     public CompositeEntity deleteWordByLength(String content, int length) {
         CompositeEntity text = (CompositeEntity) ParserLogic.parse(content);
         Matcher matcher;
-        for (TextEntity paragraph : text.getChilds()) {
-            if (paragraph.getType() == TextEntityType.PARAGRAPH) {
+        for (TextEntity paragraph : text.getChildList()) {
+            if (!paragraph.isLeaf()) {
                 CompositeEntity parag = (CompositeEntity) paragraph;
-                for (TextEntity setnences : parag.getChilds()) {
+                for (TextEntity setnences : parag.getChildList()) {
                     CompositeEntity sentence = (CompositeEntity) setnences;
                     ArrayList<TextEntity> bufferLeafList = new ArrayList<>();
-                    for (TextEntity word : sentence.getChilds()) {
-                        matcher = Pattern.compile("^[qwrtpsdfghklzxcvbnmQWRTPSDFGHJKLZXCVBNM]").matcher(word.getContent());
-                        if (matcher.find() && word.getContent().length() == length) {
+                    for (TextEntity word : sentence.getChildList()) {
+                        LeafEntity leaf = (LeafEntity)word;
+                        matcher = Pattern.compile("^[qwrtpsdfghklzxcvbnmQWRTPSDFGHJKLZXCVBNM]").matcher(leaf.toString());
+                        if (matcher.find() && leaf.getContent().length() == length) {
                             bufferLeafList.add(word);
                         }
                     }
                     for (TextEntity leaf : bufferLeafList) {
-                        sentence.getChilds().remove(leaf);
+                        sentence.getChildList().remove(leaf);
                     }
 
                 }
@@ -51,11 +53,15 @@ public class TextTask {
      */
     public CompositeEntity deleteSubString( String content, String beginnning, String end){
         CompositeEntity text = (CompositeEntity) ParserLogic.parse(content);
-        for (TextEntity paragraph : text.getChilds()) {
-            if(paragraph.getType()!=TextEntityType.CODE_LIST) {
+        for (TextEntity paragraph : text.getChildList()) {
+            if(!paragraph.isLeaf()) {
                 CompositeEntity paragraphEntity = (CompositeEntity) paragraph;
-                for (TextEntity sentence : paragraphEntity.getChilds()) {
-                    sentence.setContent(findAndDeleteMaxSubstring(sentence.getContent(),beginnning,end));
+                for (TextEntity sentence : paragraphEntity.getChildList()) {
+                    SentenceElementParser parser = new SentenceElementParser();
+                    CompositeEntity sentenceItem = (CompositeEntity) sentence;
+                    
+                    CompositeEntity bufferEntity = (CompositeEntity) parser.parse(findAndDeleteMaxSubstring(sentenceItem.toString(),beginnning,end));
+                    sentenceItem.setChildList(bufferEntity.getChildList());
                 }
             }
         }

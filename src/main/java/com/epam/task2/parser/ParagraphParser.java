@@ -3,7 +3,6 @@ package com.epam.task2.parser;
 import com.epam.task2.entity.CompositeEntity;
 import com.epam.task2.entity.LeafEntity;
 import com.epam.task2.entity.TextEntity;
-import com.epam.task2.entity.TextEntityType;
 import com.epam.task2.manager.ManagerBundle;
 
 import java.util.ArrayList;
@@ -22,17 +21,17 @@ public class ParagraphParser extends BaseParser {
 
     @Override
     public TextEntity parse(String content) {
-        CompositeEntity paragraph = new CompositeEntity(TextEntityType.TEXT);
+        CompositeEntity paragraph = new CompositeEntity();
         List<String> paragraphItems = new ArrayList<>();
         Matcher matcher = Pattern.compile(ManagerBundle.getProperty(REGEX_PARAGRAPH)).matcher(content);
         while (matcher.find()){
-            paragraphItems.add(matcher.group());
+            paragraphItems.add(matcher.group()+"\n");
         }
 
         for(String paragraphItem:paragraphItems){
             matcher = Pattern.compile(ManagerBundle.getProperty(REGEX_CODE)).matcher(paragraphItem);
             if(matcher.find()){
-                paragraph.addChild(new LeafEntity(TextEntityType.CODE_LIST,paragraphItem));
+                paragraph.addChild(new LeafEntity(paragraphItem));
             }else {
                paragraph.addChild(nextParser.parse(paragraphItem));
             }
